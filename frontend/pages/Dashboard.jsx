@@ -29,7 +29,7 @@ function Dashboard({ onLogout }) {
   const fetchEmployees = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/api/employees", {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/employees`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEmployees(response.data);
@@ -53,7 +53,7 @@ function Dashboard({ onLogout }) {
 
   const handleAddEmployee = async (formData) => {
     try {
-      await axios.post("/api/employees", formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/employees`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage("Employee added successfully");
@@ -67,7 +67,7 @@ function Dashboard({ onLogout }) {
 
   const handleUpdateEmployee = async (formData) => {
     try {
-      await axios.put(`/api/employees/${editingEmployee._id}`, formData, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/employees/${editingEmployee._id}`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage("Employee updated successfully");
@@ -83,7 +83,7 @@ function Dashboard({ onLogout }) {
   const handleDeleteEmployee = async (id) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
       try {
-        await axios.delete(`/api/employees/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_URL}/employees/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setMessage("Employee deleted successfully");
