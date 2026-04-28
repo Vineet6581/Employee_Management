@@ -40,6 +40,5 @@ app.listen(PORT, () => {
 
 
 app.use(cors({
-  origin: "https://employee-management-crrh.vercel.app",
-  credentials: true
+  origin: "*"
 }));
