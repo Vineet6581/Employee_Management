@@ -10,21 +10,23 @@ const app = express();
 
 // CORS Configuration
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN
-    ? process.env.CORS_ORIGIN.split(",")
-    : [
-        "https://employee-management-crrh.vercel.app",
-        "https://employee-management-crrh-5w42vjx4n.vercel.app",
-        "http://localhost:3000",
-      ],
+  origin: [
+    "https://employee-management-crrh.vercel.app",
+    "https://employee-management-crrh-5w42vjx4n.vercel.app",
+    "http://localhost:3000",
+  ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 200,
 };
 
 // Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Explicit OPTIONS handler for preflight requests
+app.options("*", cors(corsOptions));
 
 // MongoDB Connection
 mongoose
