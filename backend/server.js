@@ -8,8 +8,22 @@ const employeeRoutes = require("./routes/employees");
 
 const app = express();
 
+// CORS Configuration
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(",")
+    : [
+        "https://employee-management-crrh.vercel.app",
+        "https://employee-management-crrh-5w42vjx4n.vercel.app",
+        "http://localhost:3000",
+      ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // MongoDB Connection
@@ -37,12 +51,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-
-app.use(cors({
-  origin: [
-    "https://employee-management-crrh.vercel.app",
-    "https://employee-management-crrh-5w42vjx4n.vercel.app"
-  ],
-  credentials: true
-}));
