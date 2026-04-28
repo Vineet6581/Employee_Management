@@ -29,15 +29,18 @@ app.use(express.json());
 app.options("*", cors(corsOptions));
 
 // MongoDB Connection
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("MongoDB connected");
-  })
-  .catch((err) => {
-    console.log("MongoDB connection failed:", err);
-    process.exit(1);
-  });
+if (process.env.MONGO_URI) {
+  mongoose
+    .connect(process.env.MONGO_URI)
+    .then(() => {
+      console.log("MongoDB connected");
+    })
+    .catch((err) => {
+      console.log("MongoDB connection failed:", err);
+    });
+} else {
+  console.warn("MONGO_URI environment variable not set");
+}
 
 // Routes
 app.use("/api/auth", authRoutes);
